@@ -25,8 +25,9 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user data
-    // @ts-ignore - TS doesn't know the structure of the payload from JWT
-    const user = await getUserById(payload.userId);
+    // Cast userId to number from the payload
+    const userId = Number(payload.userId);
+    const user = await getUserById(userId);
     if (!user) {
       return NextResponse.json(
         { message: 'User not found' },

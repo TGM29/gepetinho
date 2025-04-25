@@ -35,8 +35,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // @ts-ignore - TS doesn't know the structure of the payload from JWT
-    const userId = payload.userId;
+    // Cast userId to number from the payload
+    const userId = Number(payload.userId);
     
     // Verify user exists
     const user = await getUserById(userId);

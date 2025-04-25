@@ -1,6 +1,7 @@
 name = "gepetinho"
 compatibility_date = "2023-12-01"
 workers_dev = true
+main = "workers-site/index.js"
 
 [site]
 bucket = ".next/static"
@@ -11,7 +12,7 @@ command = "npm run build"
 [[d1_databases]]
 binding = "DB"
 database_name = "gepetinho-db"
-database_id = "your-database-id-here"
+database_id = "70291398-2836-4c13-9de8-5b35161c56e2"
 
 [vars]
 # Add your OpenAI API key in the Cloudflare dashboard
