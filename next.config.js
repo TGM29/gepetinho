@@ -6,7 +6,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: true,
+  trailingSlash: false,
+  async exportPathMap(defaultPathMap) {
+    return {
+      ...defaultPathMap,
+    };
+  },
 };
 
 module.exports = nextConfig; 

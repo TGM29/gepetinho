@@ -1,51 +1,40 @@
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     
-    // Handle API routes
+    // Handle API requests specially
     if (url.pathname.startsWith('/api/')) {
-      try {
-        // Dynamic import of the appropriate module based on the route
-        const module = await import('./app' + url.pathname + '/route.js');
-        if (module && typeof module.POST === 'function' && request.method === 'POST') {
-          return await module.POST(request, env, ctx);
-        }
-        if (module && typeof module.GET === 'function' && request.method === 'GET') {
-          return await module.GET(request, env, ctx);
-        }
-        return new Response('Method not allowed', { status: 405 });
-      } catch (e) {
-        console.error('API error:', e);
-        return new Response('Internal Server Error', { status: 500 });
-      }
+      // Could direct to Functions here if set up
+      return new Response('API endpoint', { status: 200 });
     }
     
-    // For other routes, serve the Next.js app
     try {
-      // Serve static assets from KV
-      if (url.pathname.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg)$/)) {
-        const response = await env.__STATIC_CONTENT.fetch(request);
+      // Try to serve the requested file from static storage
+      const path = url.pathname === '/' ? '/index.html' : url.pathname;
+      
+      // For static files, try to serve from __STATIC_CONTENT
+      if (path.match(/\.(js|css|png|jpg|svg|ico)$/)) {
+        const response = await env.__STATIC_CONTENT.fetch(new Request(url));
         if (response.status !== 404) {
           return response;
         }
       }
-      
-      // Try to serve the specific page
+
+      // For route paths, try to directly fetch the .html version
       let response = await env.__STATIC_CONTENT.fetch(
-        new Request(`${url.origin}${url.pathname}.html`, request)
+        new Request(new URL(path.endsWith('.html') ? path : `${path}.html`, url))
       );
       
-      // If page not found, serve index.html
+      // If that fails, serve index.html as a fallback
       if (response.status === 404) {
         response = await env.__STATIC_CONTENT.fetch(
-          new Request(`${url.origin}/index.html`, request)
+          new Request(new URL('/index.html', url))
         );
       }
       
       return response;
     } catch (e) {
-      console.error('Worker error:', e);
-      return new Response('Internal Server Error', { status: 500 });
+      return new Response('Error: ' + (e.message || e.toString()), { status: 500 });
     }
   }
 }; 
