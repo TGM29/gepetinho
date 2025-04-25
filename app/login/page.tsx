@@ -49,11 +49,10 @@ export default function Login() {
       <div className="w-full max-w-md">
         <div className="flex justify-center mb-6">
           <div className="relative h-12 w-12">
-            <Image
+            <img
               src="/logo.svg"
               alt="Gepetinho Logo"
-              fill
-              priority
+              className="w-full h-full"
             />
           </div>
         </div>

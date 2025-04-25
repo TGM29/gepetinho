@@ -97,11 +97,10 @@ export default function Chat() {
           <div className="flex justify-center mb-6">
             <Link href="/chat">
               <div className="relative h-10 w-10">
-                <Image 
+                <img 
                   src="/logo.svg"
                   alt="Gepetinho Logo"
-                  fill
-                  priority
+                  className="w-full h-full"
                 />
               </div>
             </Link>

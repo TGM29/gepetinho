@@ -1,10 +1,9 @@
 name = "gepetinho"
 compatibility_date = "2023-12-01"
 workers_dev = true
-main = "workers-site/index.js"
 
 [site]
-bucket = ".next"
+bucket = "out"
 
 [build]
 command = "npm run build"
