@@ -4,7 +4,7 @@ workers_dev = true
 main = "workers-site/index.js"
 
 [site]
-bucket = ".next/static"
+bucket = ".next"
 
 [build]
 command = "npm run build"
@@ -17,4 +17,4 @@ database_id = "70291398-2836-4c13-9de8-5b35161c56e2"
 [vars]
 # Add your OpenAI API key in the Cloudflare dashboard
 OPENAI_API_KEY = ""
-JWT_SECRET = "your-secret-key-here" 
+JWT_SECRET = "theo1234" 
