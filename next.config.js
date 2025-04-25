@@ -7,11 +7,6 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: false,
-  async exportPathMap(defaultPathMap) {
-    return {
-      ...defaultPathMap,
-    };
-  },
 };
 
 module.exports = nextConfig; 
